@@ -15,12 +15,3 @@
   background-image:url('https://www.airmanopus.net/huskiehack/images/mic_icon.jpeg');
   background-repeat:no-repeat;
 }
-
-.no-display {
-  display: none;
-}
-
-.yes-display {
-  display: block;
-  visibility: visible;
-}
