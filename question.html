@@ -64,13 +64,15 @@ recognition.onresult = function(event) {
 </head>
 
 <body>
-<div class="page-header">
-    <h1>Please spell your first name <small>(say each letter)</small></h1>
+<div class="page-header large_text">Please spell your first name <small>(say each letter)</small>.
 </div>
+
 <div>
   <span class="label label-default" onclick="startButton()">Push to start speaking</span>
 </div>
-<div id="interim"></div>
+  <div class="panel panel-default">
+      <div class="panel-body" id="interim"></div>
+  </div>
 <div id="output"></div>
 </body>
 </html>
