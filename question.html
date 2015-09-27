@@ -15,11 +15,39 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="https://www.airmanopus.net/huskiehack/js/say.js"></script>
 <script>
+var recognition = [];
+var final_transcript = [];
+var interim_transcript = [];
+var NUM_QUESTIONS = 5;
+var outputs = ['firstNameEcho','lastNameEcho','dateOfBirthEcho','painIndexEcho','chestPainEcho'];
 
-var recognition = new webkitSpeechRecognition();
+function init() {
+  // set up a separate speech recognition listener for each of the questions
+  for(var k = 0; k < NUM_QUESTIONS; k++) {
+    recognition[k] = new webkitSpeechRecognition();
+    recognition[k].continuous = true;
+    recognition[k].interimResults = true;
 
-recognition.continuous = true;
-recognition.interimResults = true;
+    recognition[k].onerror = function(event) {
+      console.log('error?');
+      console.log(event);
+    }
+
+    recognition[k].onresult = function(event) {
+      var interim_transcript = '';
+      for (var i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          final_transcript[k] += event.results[i][0].transcript;
+        } else {
+          interim_transcript[k] += event.results[i][0].transcript;
+        }
+      }
+      final_transcript[k] = capitalize(final_transcript);
+      document.getElementById(outputs[k]).innerHTML = linebreak(final_transcript);
+    }
+  }
+}  
+
 
 var first_char = /\S/;
 function capitalize(s) {
@@ -34,68 +62,73 @@ function linebreak(s) {
     return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
 }
 
-function startButton(event) {
-  console.log('startButton');
+function firstNameButton(event) {
+  console.log('firstNameButton');
   final_transcript = '';
-  recognition.lang = 'en_us';
-  recognition.start();
+  recognition[0].lang = 'en_us';
+  recognition[0].start();
 }
 
-recognition.onerror = function(event) {
-  console.log('error?');
-  console.log(event);
+function lastNameButton(event) {
+  console.log('lastNameButton');
+  final_transcript = '';
+  recognition[1].lang = 'en_us';
+  recognition[1].start();
 }
 
-recognition.onresult = function(event) {
-  var interim_transcript = '';
-  for (var i = event.resultIndex; i < event.results.length; i++) {
-    if (event.results[i].isFinal) {
-      final_transcript += event.results[i][0].transcript;
-    } else {
-      interim_transcript += event.results[i][0].transcript;
-    }
-  }
-  final_transcript = capitalize(final_transcript);
-  
-  // TODO instead of just outputting to the page, we want to record the response to send 
-  // on to the ER staff
-  document.getElementById('output').innerHTML = linebreak(final_transcript);
-  document.getElementById('interim').innerHTML = linebreak(interim_transcript);
+function dateOfBirthButton(event) {
+  console.log('dateOfBirthButton');
+  final_transcript = '';
+  recognition[2].lang = 'en_us';
+  recognition[2].start();
+}
+
+function painIndexButton(event) {
+  console.log('painIndexButton');
+  final_transcript = '';
+  recognition[3].lang = 'en_us';
+  recognition[3].start();
+}
+
+function chestPainButton(event) {
+  console.log('chestPainButton');
+  final_transcript = '';
+  recognition[4].lang = 'en_us';
+  recognition[4].start();
 }
 
 </script>
 
 </head>
-
-<body>
+<body onload="init()">
 <div class="container">
   <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
+    <div class="col-md-4"><center><span onclick="firstNameButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
     <div class="col-md-8 text-primary large_text" id="firstName">Please press the 'Push to Talk' button and then spell your first name.<br> <small>(Say each letter.)</small>
     <div class="well" id="firstNameEcho"></div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
+    <div class="col-md-4"><center><span onclick="lastNameButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
     <div class="col-md-8 text-primary large_text" id="lastName">Please press the 'Push to Talk' button and then spell your last name.<br> <small>(Say each letter.)</small>
     <div class="well" id="lastNameEcho"></div>
   </div>
 
   <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
+    <div class="col-md-4"><center><span onclick="dateOfBirthButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
     <div class="col-md-8 text-primary large_text" id="dateOfBirth">Please press the 'Push to Talk' button and say your birth date.<br> <small>(Say month, day and year.)</small>
     <div class="well" id="dateOfBirthEcho"></div>
   </div>
 
   <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
+    <div class="col-md-4"><center><span onclick="painIndexButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
     <div class="col-md-8 text-primary large_text" id="painIndex">Please press the 'Push to Talk' button and indicate your level of pain <small>zero being none and ten being the highest possible.</small>
     <div class="well" id="painIndexEcho"></div>
   </div>
 
   <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
+    <div class="col-md-4"><center><span onclick="chestPainButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
     <div class="col-md-8 text-primary large_text" id="chestPain">Please press the 'Push to Talk' button and tell us if you are feeling chest pain<small>(Say yes or no.)</small>
     <div class="well" id="chestPainEcho"></div>
   </div>
