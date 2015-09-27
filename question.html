@@ -35,6 +35,7 @@ function linebreak(s) {
 }
 
 function startButton(event) {
+  console.log('startButton');
   final_transcript = '';
   recognition.lang = 'en_us';
   recognition.start();
@@ -64,11 +65,11 @@ recognition.onresult = function(event) {
 </head>
 
 <body>
-<div class="page-header large_text">Please spell your first name <small>(say each letter)</small>.
+<div class="page-header large_text">Please spell your first name.<br> <small>(Say each letter.)</small>
 </div>
 
 <div>
-  <span class="label label-default" onclick="startButton()">Push to start speaking</span>
+  <center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic.jpeg" border="0"></span></center>
 </div>
   <div class="panel panel-default">
       <div class="panel-body" id="interim"></div>
