@@ -57,10 +57,8 @@ recognition.onresult = function(event) {
   }
   final_transcript = capitalize(final_transcript);
   
-  // TODO instead of just outputting to the page, we want to record the response to send 
-  // on to the ER staff
-  document.getElementById('output').innerHTML = linebreak(final_transcript);
-  document.getElementById('interim').innerHTML = linebreak(interim_transcript);
+//  document.getElementById('output').innerHTML = linebreak(final_transcript);
+  document.getElementById('painIndexEcho').innerHTML = linebreak(interim_transcript);
 }
 
 </script>
@@ -71,34 +69,12 @@ recognition.onresult = function(event) {
 <div class="container">
   <div class="row">
     <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
-    <div class="col-md-8 text-primary large_text" id="firstName">Please press the 'Push to Talk' button and then spell your first name.<br> <small>(Say each letter.)</small>
-    <div class="well" id="firstNameEcho"></div>
+    <div class="col-md-8 text-primary large_text" id="firstName">Please press the 'Push to Talk' button and say your pain level.<br> <small>(Zero is no pain, ten is the most pain.)</small>
+    <div class="well" id="painIndexEcho"></div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
-    <div class="col-md-8 text-primary large_text" id="lastName">Please press the 'Push to Talk' button and then spell your last name.<br> <small>(Say each letter.)</small>
-    <div class="well" id="lastNameEcho"></div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
-    <div class="col-md-8 text-primary large_text" id="dateOfBirth">Please press the 'Push to Talk' button and say your birth date.<br> <small>(Say month, day and year.)</small>
-    <div class="well" id="dateOfBirthEcho"></div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
-    <div class="col-md-8 text-primary large_text" id="painIndex">Please press the 'Push to Talk' button and indicate your level of pain <small>zero being none and ten being the highest possible.</small>
-    <div class="well" id="painIndexEcho"></div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4"><center><span onclick="startButton()"><img src="https://www.airmanopus.net/huskiehack/images/mic3.jpeg" border="0" height="150px" width="150px"></span></center></div>
-    <div class="col-md-8 text-primary large_text" id="chestPain">Please press the 'Push to Talk' button and tell us if you are feeling chest pain<small>(Say yes or no.)</small>
-    <div class="well" id="chestPainEcho"></div>
-  </div>
+  
 
 </div>
 </body>
